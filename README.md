@@ -4,7 +4,7 @@ Author - Nazibur Rahman
 Daffodil International University
 <br>
 <br>
-ZStore is a comprehensive inventory management system developed using Python. Designed for small to medium-sized businesses, it offers efficient stock tracking, sales management, and administrative control. The system includes features such as real-time inventory updates, easy product categorization, billing, and user authentication for secure access. ZStore aims to streamline inventory operations, reduce manual errors, and enhance productivity for businesses.
+Zstore is a comprehensive inventory management system developed using Python. Designed for small to medium-sized businesses, it offers efficient stock tracking, sales management, and administrative control. The system includes features such as real-time inventory updates, easy product categorization, billing, and user authentication for secure access. ZStore aims to streamline inventory operations, reduce manual errors, and enhance productivity for businesses.
 <br>
 <br>
 Features:
@@ -27,4 +27,9 @@ Python
 SQLite (for Database)
 <br>
 Tkinter (for GIU)
+<br>
 Other relevant libraries
+<br>
+<br>
+<br>
+(This one is my first project just for my class assignment. Please consider the mistakes)
