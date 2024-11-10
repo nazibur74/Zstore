@@ -17,6 +17,6 @@ ZStore is a comprehensive inventory management system developed using Python. De
 
 ## Technologies Used:
 - Python
-- SQLite (or any database you used)
-- Tkinter (if used for GUI)
+- SQLite (database)
+- Tkinter (used for GUI)
 - Other relevant libraries
