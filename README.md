@@ -6,7 +6,7 @@ Daffodil International University
 <br>
 <br>
 
-ZStore is a comprehensive inventory management system developed using Python. Designed for small to medium-sized businesses, it offers efficient stock tracking, sales management, and administrative control. The system includes features such as real-time inventory updates, easy product categorization, billing, and user authentication for secure access. ZStore aims to streamline inventory operations, reduce manual errors, and enhance productivity for businesses.
+Zstore is a comprehensive inventory management system developed using Python. Designed for small to medium-sized businesses, it offers efficient stock tracking, sales management, and administrative control. The system includes features such as real-time inventory updates, easy product categorization, billing, and user authentication for secure access. ZStore aims to streamline inventory operations, reduce manual errors, and enhance productivity for businesses.
 
 ## Features:
 - **Real-Time Inventory Tracking**: Automatically update stock levels with each transaction.
