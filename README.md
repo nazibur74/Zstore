@@ -1,4 +1,4 @@
-# ZStore - Inventory Management System
+# Zstore - Inventory Management System
 <br>
 Author : Nazibur Rahman
 <br>
