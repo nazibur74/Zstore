@@ -4,12 +4,14 @@ from tkinter import ttk, messagebox
 import sqlite3
 from datetime import datetime
 import os
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 
 class salesClass:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1040x590+410+200")
+        self.root.geometry("1040x590+340+200")
         self.root.title("Sales Management")
         self.root.config(bg="skyblue")
         self.root.focus_force()
@@ -35,8 +37,7 @@ class salesClass:
         title.place(x=10, y=10, width=1020)
 
         # Search Frame
-        searchFrame = LabelFrame(self.root, text="Search Product", font=("goudy old style", 12, "bold"), bd=1,
-                                 relief=RIDGE, bg="white", fg="black")
+        searchFrame = LabelFrame(self.root, text="Search Product", font=("goudy old style", 12, "bold"), bd=1,relief=RIDGE, bg="white", fg="black")
         searchFrame.place(x=10, y=50, height=70, width=1020)
 
         lbl_search = Label(searchFrame, text="Search by Product ID/Name", bg='white', font=("goudy old style", 15))
@@ -45,60 +46,48 @@ class salesClass:
         txt_search = Entry(searchFrame, textvariable=self.var_searchtxt, font=("goudy old style", 15), bg="lightgray")
         txt_search.place(x=250, y=10, width=460)
 
-        btn_search = Button(searchFrame, text="Search", command=self.search, font=("goudy old style", 15, "bold"),
-                            cursor="hand2", bg="#059212", fg="white", bd=1, relief=RIDGE)
+        btn_search = Button(searchFrame, text="Search", command=self.search, font=("goudy old style", 15, "bold"),cursor="hand2", bg="#059212", fg="white", bd=1, relief=RIDGE)
         btn_search.place(x=720, y=9, width=120, height=30)
 
         # Customer Info Labels and Entries
-        lbl_customer_name = Label(self.root, text="Customer Name", font=("goudy old style", 15, "bold"), bg="skyblue",
-                                  fg="#180161")
+        lbl_customer_name = Label(self.root, text="Customer Name", font=("goudy old style", 15, "bold"), bg="skyblue",fg="#180161")
         lbl_customer_name.place(x=10, y=130)
 
-        txt_customer_name = Entry(self.root, textvariable=self.var_customer_name, font=("goudy old style", 15),
-                                  bg="#F6E96B")
+        txt_customer_name = Entry(self.root, textvariable=self.var_customer_name, font=("goudy old style", 15),bg="#F6E96B")
         txt_customer_name.place(x=150, y=130, width=220)
 
-        lbl_customer_contact = Label(self.root, text="Contact No.", font=("goudy old style", 15, "bold"), bg="skyblue",
-                                     fg="#180161")
+        lbl_customer_contact = Label(self.root, text="Contact No.", font=("goudy old style", 15, "bold"), bg="skyblue",fg="#180161")
         lbl_customer_contact.place(x=10, y=180)
 
-        txt_customer_contact = Entry(self.root, textvariable=self.var_customer_contact, font=("goudy old style", 15),
-                                     bg="#F6E96B")
+        txt_customer_contact = Entry(self.root, textvariable=self.var_customer_contact, font=("goudy old style", 15),bg="#F6E96B")
         txt_customer_contact.place(x=150, y=180, width=220)
 
         # Product Info Labels and Entries
-        lbl_product_id = Label(self.root, text="Product ID", font=("goudy old style", 15, "bold"), bg="skyblue",
-                               fg="#180161")
+        lbl_product_id = Label(self.root, text="Product ID", font=("goudy old style", 15, "bold"), bg="skyblue",fg="#180161")
         lbl_product_id.place(x=10, y=230)
 
-        txt_product_id = Entry(self.root, textvariable=self.var_product_id, font=("goudy old style", 15), bg="#F6E96B",
-                               state='readonly')
+        txt_product_id = Entry(self.root, textvariable=self.var_product_id, font=("goudy old style", 15), bg="#F6E96B",state='readonly')
         txt_product_id.place(x=150, y=230, width=220)
 
         lbl_name = Label(self.root, text="Name", font=("goudy old style", 15, "bold"), bg="skyblue", fg="#180161")
         lbl_name.place(x=10, y=280)
 
-        txt_name = Entry(self.root, textvariable=self.var_product_name, font=("goudy old style", 15), bg="#F6E96B",
-                         state='readonly')
+        txt_name = Entry(self.root, textvariable=self.var_product_name, font=("goudy old style", 15), bg="#F6E96B", state='readonly')
         txt_name.place(x=150, y=280, width=220)
 
         lbl_price = Label(self.root, text="Price", font=("goudy old style", 15, "bold"), bg="skyblue", fg="#180161")
         lbl_price.place(x=10, y=330)
 
-        txt_price = Entry(self.root, textvariable=self.var_price, font=("goudy old style", 15), bg="#F6E96B",
-                          state='readonly')
+        txt_price = Entry(self.root, textvariable=self.var_price, font=("goudy old style", 15), bg="#F6E96B", state='readonly')
         txt_price.place(x=150, y=330, width=220)
 
-        lbl_qty = Label(self.root, text="Available Qty", font=("goudy old style", 15, "bold"), bg="skyblue",
-                        fg="#180161")
+        lbl_qty = Label(self.root, text="Available Qty", font=("goudy old style", 15, "bold"), bg="skyblue", fg="#180161")
         lbl_qty.place(x=10, y=380)
 
-        txt_qty = Entry(self.root, textvariable=self.var_qty, font=("goudy old style", 15), bg="#F6E96B",
-                        state='readonly')
+        txt_qty = Entry(self.root, textvariable=self.var_qty, font=("goudy old style", 15), bg="#F6E96B", state='readonly')
         txt_qty.place(x=150, y=380, width=220)
 
-        lbl_sale_qty = Label(self.root, text="Sale Qty", font=("goudy old style", 15, "bold"), bg="skyblue",
-                             fg="#180161")
+        lbl_sale_qty = Label(self.root, text="Sale Qty", font=("goudy old style", 15, "bold"), bg="skyblue", fg="#180161")
         lbl_sale_qty.place(x=10, y=430)
 
         txt_sale_qty = Entry(self.root, textvariable=self.var_sale_qty, font=("goudy old style", 15), bg="#F6E96B")
@@ -106,17 +95,17 @@ class salesClass:
 
         # Buttons
         btn_add_to_cart = Button(self.root, text="Add to Cart", command=self.add_to_cart,
-                                 font=("goudy old style", 15, "bold"), cursor="hand2", bg="green", fg="white", bd=1,
-                                 relief=RIDGE)
+        font=("goudy old style", 15, "bold"), cursor="hand2", bg="green", fg="white", bd=1,
+         relief=RIDGE)
         btn_add_to_cart.place(x=10, y=480, width=160, height=28)
 
         btn_generate_bill = Button(self.root, text="Generate Bill", command=self.generate_bill,
-                                   font=("goudy old style", 15, "bold"), cursor="hand2", bg="blue", fg="white", bd=1,
-                                   relief=RIDGE)
+        font=("goudy old style", 15, "bold"), cursor="hand2", bg="blue", fg="white", bd=1,
+           relief=RIDGE)
         btn_generate_bill.place(x=190, y=480, width=160, height=28)
 
         btn_clear = Button(self.root, text="Clear", command=self.clear, font=("goudy old style", 15), cursor="hand2",
-                           bg="gray", fg="white", bd=1, relief=RIDGE)
+        bg="gray", fg="white", bd=1, relief=RIDGE)
         btn_clear.place(x=370, y=480, width=160, height=28)
 
         # Product Table Frame
@@ -126,8 +115,7 @@ class salesClass:
         scrolly = Scrollbar(product_frame, orient=VERTICAL)
         scrollx = Scrollbar(product_frame, orient=HORIZONTAL)
 
-        self.ProductTable = ttk.Treeview(product_frame, columns=("ID", "Name", "Price", "Qty"),
-                                         yscrollcommand=scrolly.set, xscrollcommand=scrollx.set)
+        self.ProductTable = ttk.Treeview(product_frame, columns=("ID", "Name", "Price", "Qty"), yscrollcommand=scrolly.set, xscrollcommand=scrollx.set)
         scrollx.pack(side=BOTTOM, fill=X)
         scrolly.pack(side=RIGHT, fill=Y)
         scrollx.config(command=self.ProductTable.xview)
@@ -232,9 +220,11 @@ class salesClass:
             messagebox.showerror("Error", "No products in cart to generate bill", parent=self.root)
             return
 
-        bill_text = f"Customer Name: {customer_name}\nContact: {customer_contact}\n"
-        bill_text += f"{'ID':<10}{'Name':<20}{'Qty':<10}{'Price':<10}{'Total':<10}\n"
-        bill_text += "-" * 60 + "\n"
+        current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        bill_text = f"{current_datetime}\n"
+        bill_text += f"Customer Name: {customer_name}\nContact: {customer_contact}\n"
+        bill_text += f"{'ID':<15}{'Name':<30}{'Qty':<10}{'Price':<10}{'Total':<10}\n"
+        bill_text += "-" * 70 + "\n"
 
         total_amount = 0
         con = sqlite3.connect('zstore.db')
@@ -242,7 +232,7 @@ class salesClass:
 
         for product in self.selected_products:
             product_id, name, price, qty, total_price = product
-            bill_text += f"{product_id:<10}{name:<20}{qty:<10}{price:<10}{total_price:<10}\n"
+            bill_text += f"{product_id:<10}{name:<30}{qty:<10}{price:<10}{total_price:<10}\n"
             total_amount += total_price
 
             # Deduct the sold quantity from the database
@@ -263,8 +253,8 @@ class salesClass:
         con.commit()
         con.close()
 
-        bill_text += "-" * 60 + "\n"
-        bill_text += f"{'Total Amount':<50}{total_amount:<10}\n"
+        bill_text += "-" * 70 + "\n"
+        bill_text += f"{'Total Amount':<65}{total_amount:<10}\n"
 
         # Save bill to file
         self.save_bill_to_file(customer_name, bill_text)
@@ -272,28 +262,43 @@ class salesClass:
         # Clear cart after bill generation
         self.selected_products.clear()
 
-    # Save Bill to File
+
     # Save Bill to File
     def save_bill_to_file(self, customer_name, bill_text):
-        # Create a filename based on the customer name and current timestamp to avoid duplicates
-        filename = f"{customer_name}_{datetime.now().strftime('%Y%m%d%H%M%S')}_bill.txt"
+        filename = f"{customer_name}_{datetime.now().strftime('%Y%m%d%H%M%S')}_bill.pdf"
         bill_path = os.path.join(self.bill_directory, filename)
 
         # Temporarily hide the main window
-        self.root.withdraw()  # Hide the main window
+        self.root.withdraw()
 
         try:
-            with open(bill_path, 'w') as f:
-                f.write(bill_text)
-            messagebox.showinfo("Bill Saved", f"Bill saved successfully at {bill_path}")
+            # Create a PDF file
+            c = canvas.Canvas(bill_path, pagesize=letter)
+            width, height = letter
+
+            # Add a title and the bill content
+            c.setFont("Helvetica-Bold", 16)
+            c.drawString(100, height - 50, f"Zstore")
+            c.setFont("Helvetica", 12)
+
+            # Add the bill content
+            text_object = c.beginText(100, height - 100)
+            text_object.setFont("Helvetica", 12)
+
+            # Break the bill text into lines and add it to the PDF
+            for line in bill_text.splitlines():
+                text_object.textLine(line)
+            c.drawText(text_object)
+
+            # Finalize the PDF file
+            c.save()
+
+            messagebox.showinfo("Bill Saved", f"Bill saved successfully{bill_path}")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to save bill: {str(e)}")
         finally:
             self.root.deiconify()  # Show the main window again
-
-
-# Main function to run the application
-if __name__ == "__main__":
-    root = Tk()
-    obj = salesClass(root)
-    root.mainloop()
+    
+# root = Tk()
+# window = salesClass(root)
+# root.mainloop()

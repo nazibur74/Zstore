@@ -5,9 +5,8 @@ import sqlite3
 
 class categoryClass:
     def __init__(self, root):
-        # Initialize the main window
         self.root = root
-        self.root.geometry("1040x590+410+200")
+        self.root.geometry("1040x590+340+200")
         self.root.title("Category")
         self.root.config(bg="skyblue")
         self.root.focus_force()
@@ -114,8 +113,6 @@ class categoryClass:
         if row_data:
             self.var_cat_name.set(row_data[1])
 
-# Main function to run the application
-if __name__ == "__main__":
-    root = Tk()
-    obj = categoryClass(root)
-    root.mainloop()
+# root = Tk()
+# window = categoryClass(root)
+# root.mainloop()

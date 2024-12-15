@@ -11,12 +11,11 @@ from sales import salesClass
 class dashboardClass:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1350x700+100+100")
+        self.root.geometry("1350x700+30+100")
         self.root.title("Zstore")
         self.root.config(bg="white")
 
         # Title and Logout Button
-        self.icon_title = PhotoImage(file="Images/Logo1.png")
         title = Label(self.root, text="Zstore", font=("times new roman", 40, "bold"), bg="skyblue", fg="#211C6A", anchor="w", padx=20)
         title.place(x=0, y=0, relwidth=1, height=70)
         btn_logout = Button(self.root, text="Log out", font=("arial", 13, "bold"), command=self.logout, cursor="hand2").place(x=1210, y=20, height=28, width=100)
@@ -124,7 +123,6 @@ class dashboardClass:
         finally:
             con.close()
 
-if __name__ == "__main__":
-    root = Tk()
-    obj = dashboardClass(root)
-    root.mainloop()
+# root = Tk()
+# dashboard = dashboardClass(root)
+# root.mainloop()

@@ -6,7 +6,7 @@ import sqlite3
 class supplierClass:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1040x590+410+200")
+        self.root.geometry("1040x590+340+200")
         self.root.title("Supplier")
         self.root.config(bg="skyblue")
         self.root.focus_force()
@@ -213,7 +213,6 @@ class supplierClass:
         except Exception as ex:
             messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
 
-if __name__ == "__main__":
-    root = Tk()
-    obj = supplierClass(root)
-    root.mainloop()
+# root = Tk()
+# window = supplierClass(root)
+# root.mainloop()

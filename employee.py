@@ -6,7 +6,7 @@ import sqlite3
 class employeeClass:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1040x590+410+200")
+        self.root.geometry("1040x590+340+200")
         self.root.title("Employee")
         self.root.config(bg="skyblue")
         self.root.focus_force()
@@ -121,6 +121,24 @@ class employeeClass:
 
         self.show()
 
+    def get_data(self, ev):
+        f = self.EmployeeTable.focus()
+        content = (self.EmployeeTable.item(f))
+        row = content['values']
+
+        self.var_emp_id.set(row[0]),
+        self.var_emp_gender.set(row[1]),
+        self.var_emp_contact.set(row[2]),
+        self.var_emp_name.set(row[3]),
+        self.var_emp_dob.set(row[4]),
+        self.var_emp_doj.set(row[5]),
+        self.var_emp_email.set(row[6]),
+        self.var_emp_pass.set(row[7]),
+        self.var_emp_utype.set(row[8]),
+        self.txt_address.delete('1.0', END)
+        self.txt_address.insert(END, row[9]),
+        self.var_emp_salary.set(row[10]),
+
 
     def save(self):
         con = sqlite3.connect(database=r'zstore.db')
@@ -171,24 +189,6 @@ class employeeClass:
         except Exception as ex :
             messagebox.showerror("Eorror", f"Error due to : {str(ex)}", parent = self.root)
 
-    def get_data(self, ev):
-        f = self.EmployeeTable.focus()
-        content = (self.EmployeeTable.item(f))
-        row = content['values']
-
-        self.var_emp_id.set(row[0]),
-        self.var_emp_gender.set(row[1]),
-        self.var_emp_contact.set(row[2]),
-        self.var_emp_name.set(row[3]),
-        self.var_emp_dob.set(row[4]),
-        self.var_emp_doj.set(row[5]),
-        self.var_emp_email.set(row[6]),
-        self.var_emp_pass.set(row[7]),
-        self.var_emp_utype.set(row[8]),
-        self.txt_address.delete('1.0', END)
-        self.txt_address.insert(END, row[9]),
-        self.var_emp_salary.set(row[10]),
-
 
     def update(self):
         con = sqlite3.connect(database=r'zstore.db')
@@ -218,7 +218,8 @@ class employeeClass:
                         self.var_emp_id.get(),
                     ))
                     con.commit()
-                    messagebox.showinfo("Success", "Employee updated successfully", parent = self.root)
+                    messagebox.showinfo("Success", "Employee updated successfully", 
+                    parent = self.root)
                     self.show()
 
         except Exception as ex :
@@ -268,24 +269,22 @@ class employeeClass:
         cur = con.cursor()
 
         try:
-            if self.var_searchby.get()=="":
-                messagebox.showerror("Error", "Select search option", parent = self.root)
-            elif self.var_searchtxt.get()=="":
-                messagebox.showerror("Error", "fill search area", parent = self.root)
+            if self.var_searchby.get() == "Select":
+                messagebox.showerror("Error", "Select a valid search option", parent=self.root)
+            elif self.var_searchtxt.get() == "":
+                messagebox.showerror("Error", "Search input should not be empty", parent=self.root)
             else:
-                cur.execute("SELECT * FROM Employee WHERE " + self.var_searchby.get() + " LIKE ?", ('%' + self.var_searchtxt.get() + '%',))
+                cur.execute(f"SELECT * FROM Employee WHERE {self.var_searchby.get()} LIKE ?", ('%' + self.var_searchtxt.get() + '%',))
                 rows = cur.fetchall()
-                if len(rows)!=0:
+                if len(rows) != 0:
                     self.EmployeeTable.delete(*self.EmployeeTable.get_children())
-                    for row in rows:
-                       self.EmployeeTable.insert('', END, values=row)
+                    for row in rows:self.EmployeeTable.insert('', END, values=row)
                 else:
-                    messagebox.showerror("Error", "No data found!", parent = self.root)
+                    messagebox.showinfo("Info", "No record found", parent=self.root)
 
-        except Exception as ex :
-            messagebox.showerror("Eorror", f"Error due to : {str(ex)}", parent = self.root)
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
 
-if __name__ == "__main__":
-    root = Tk()
-    obj = employeeClass(root)
-    root.mainloop()
+# root = Tk()
+# employee = employeeClass(root)
+# root.mainloop()

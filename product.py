@@ -6,7 +6,7 @@ import sqlite3
 class productClass:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1040x590+410+200")
+        self.root.geometry("1040x590+340+200")
         self.root.title("Product")
         self.root.config(bg="skyblue")
         self.root.focus_force()
@@ -285,8 +285,6 @@ class productClass:
         finally:
             con.close()
 
-# Main function to run the application
-if __name__=="__main__":
-    root = Tk()
-    obj = productClass(root)
-    root.mainloop()
+# root = Tk()
+# window = productClass(root)
+# root.mainloop()
